@@ -20,7 +20,7 @@ export function ChefShell() {
         <NavLink to="/chef/recipes/new" className={linkClass}>
           Add Recipe
         </NavLink>
-        <NavLink to="/profile" className={linkClass}>
+        <NavLink to="/chef/profile" className={linkClass}>
           Profile
         </NavLink>
         <button

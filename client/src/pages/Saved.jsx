@@ -71,7 +71,7 @@ export function Saved() {
               style={{ width: 72, height: 72, borderRadius: '50%', objectFit: 'cover' }}
             />
             <div>
-              <Link to={`/recipes/${r._id}`} style={{ fontWeight: 700, color: 'var(--yy-text)' }}>
+              <Link to={`/home/recipes/${r._id}`} style={{ fontWeight: 700, color: 'var(--yy-text)' }}>
                 {r.title}
               </Link>
               <div style={{ fontSize: '0.85rem', color: 'var(--yy-muted)' }}>
@@ -79,7 +79,7 @@ export function Saved() {
               </div>
             </div>
             <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-              <Link to={`/recipes/${r._id}`} className="yy-btn yy-btn-primary">
+              <Link to={`/home/recipes/${r._id}`} className="yy-btn yy-btn-primary">
                 View
               </Link>
               <button type="button" className="yy-btn yy-btn-danger" onClick={() => remove(r._id)}>

@@ -69,7 +69,7 @@ export function Home() {
             <div className="meta">
               {rec.category?.name} · {rec.cookingTimeMinutes} mins
             </div>
-            <Link to={`/recipes/${rec._id}`} className="yy-btn yy-btn-primary">
+            <Link to={`/home/recipes/${rec._id}`} className="yy-btn yy-btn-primary">
               View full recipe
             </Link>
           </div>

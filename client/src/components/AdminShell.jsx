@@ -32,6 +32,9 @@ export function AdminShell() {
         <NavLink to="/admin/analytics" className={linkClass}>
           Analytics
         </NavLink>
+        <NavLink to="/admin/profile" className={linkClass}>
+          Profile
+        </NavLink>
         <button
           type="button"
           className="logout"

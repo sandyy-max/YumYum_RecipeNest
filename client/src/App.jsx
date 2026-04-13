@@ -57,12 +57,14 @@ export default function App() {
 
       <Route
         element={
-          <ProtectedRoute roles={['user', 'chef', 'admin']}>
+          <ProtectedRoute roles={['user']}>
             <UserShell />
           </ProtectedRoute>
         }
       >
         <Route path="/home" element={<Home />} />
+        <Route path="/home/recipes" element={<Recipes showHeader={false} backTo="/home" />} />
+        <Route path="/home/recipes/:id" element={<RecipeDetail showHeader={false} backTo="/home/recipes" />} />
         <Route path="/saved" element={<Saved />} />
         <Route path="/profile" element={<Profile />} />
       </Route>
@@ -77,6 +79,7 @@ export default function App() {
         <Route path="/chef/dashboard" element={<ChefDashboard />} />
         <Route path="/chef/recipes/new" element={<ChefRecipeForm />} />
         <Route path="/chef/recipes/:id/edit" element={<ChefRecipeForm />} />
+        <Route path="/chef/profile" element={<Profile />} />
       </Route>
 
       <Route
@@ -92,6 +95,7 @@ export default function App() {
         <Route path="/admin/recipes/pending" element={<AdminPending />} />
         <Route path="/admin/contacts" element={<AdminContacts />} />
         <Route path="/admin/analytics" element={<AdminAnalytics />} />
+        <Route path="/admin/profile" element={<Profile />} />
       </Route>
 
       <Route path="*" element={<Navigate to="/" replace />} />

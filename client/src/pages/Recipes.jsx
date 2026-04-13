@@ -3,10 +3,12 @@ import { Link, useSearchParams } from 'react-router-dom';
 import { http } from '../api/http.js';
 import { recipeImage, IMG } from '../lib/assets.js';
 import { PublicHeader } from '../components/PublicHeader.jsx';
+import { BackButton } from '../components/BackButton.jsx';
 
-export function Recipes() {
+export function Recipes({ showHeader = true, backTo = '/home' }) {
   const [params] = useSearchParams();
   const initial = params.get('q') || '';
+  const category = params.get('category') || '';
   const [search, setSearch] = useState(initial);
   const [data, setData] = useState({ recipes: [], loading: true });
 
@@ -18,7 +20,12 @@ export function Recipes() {
     let cancelled = false;
     (async () => {
       try {
-        const { data: body } = await http.get('/api/recipes', { params: { search } });
+        const { data: body } = await http.get('/api/recipes', {
+          params: {
+            search,
+            ...(category ? { category } : {}),
+          },
+        });
         if (!cancelled) setData({ recipes: body.recipes, loading: false });
       } catch {
         if (!cancelled) setData({ recipes: [], loading: false });
@@ -27,14 +34,15 @@ export function Recipes() {
     return () => {
       cancelled = true;
     };
-  }, [search]);
+  }, [search, category]);
 
   return (
     <>
       <div className="yy-bg-blur" style={{ backgroundImage: `url(${IMG.bgFood})` }} />
       <div className="yy-overlay" />
-      <PublicHeader search={search} onSearchChange={setSearch} />
+      {showHeader ? <PublicHeader search={search} onSearchChange={setSearch} /> : null}
       <section className="yy-section">
+        <BackButton to={showHeader ? '/' : backTo} label="Back" />
         <h1 className="yy-section-title" style={{ textAlign: 'left' }}>
           Recipes
         </h1>
@@ -52,7 +60,7 @@ export function Recipes() {
                 <div className="meta">
                   {r.category?.name} · {r.cookingTimeMinutes} mins · ★ {r.averageRating || 0}
                 </div>
-                <Link to={`/recipes/${r._id}`} className="yy-btn yy-btn-primary">
+                <Link to={showHeader ? `/recipes/${r._id}` : `/home/recipes/${r._id}`} className="yy-btn yy-btn-primary">
                   View full recipe
                 </Link>
               </div>

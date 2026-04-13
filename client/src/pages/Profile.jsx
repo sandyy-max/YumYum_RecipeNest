@@ -1,10 +1,12 @@
 import { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { http } from '../api/http.js';
 import { useAuth } from '../context/AuthContext.jsx';
 import { BackButton } from '../components/BackButton.jsx';
 
 export function Profile() {
   const { user, refreshMe } = useAuth();
+  const location = useLocation();
   const [name, setName] = useState(user?.name || '');
   const [email, setEmail] = useState(user?.email || '');
   const [currentPassword, setCurrentPassword] = useState('');
@@ -39,11 +41,32 @@ export function Profile() {
     }
   }
 
+  const backTo =
+    location.pathname.startsWith('/chef') ? '/chef/dashboard' : location.pathname.startsWith('/admin') ? '/admin/dashboard' : '/home';
+
   return (
     <div style={{ maxWidth: 520 }}>
+      <BackButton to={backTo} label="Back to dashboard" />
       <h1 style={{ marginTop: 0 }}>Profile</h1>
       {msg ? <p style={{ color: 'var(--yy-green)' }}>{msg}</p> : null}
       {err ? <p className="yy-err">{err}</p> : null}
+      <div className="yy-glass" style={{ padding: '1.25rem', marginBottom: 16 }}>
+        <h2 style={{ marginTop: 0 }}>Account details</h2>
+        <div style={{ display: 'grid', gap: 8, color: 'var(--yy-text)' }}>
+          <div>
+            <strong>Name:</strong> {user?.name || '-'}
+          </div>
+          <div>
+            <strong>Email:</strong> {user?.email || '-'}
+          </div>
+          <div>
+            <strong>Role:</strong> {user?.role || '-'}
+          </div>
+          <div>
+            <strong>Status:</strong> {user?.accountStatus || 'active'}
+          </div>
+        </div>
+      </div>
       <div className="yy-glass" style={{ padding: '1.25rem', marginBottom: 16 }}>
         <h2 style={{ marginTop: 0 }}>Personal</h2>
         <form onSubmit={saveProfile} style={{ display: 'grid', gap: 12 }}>
@@ -80,9 +103,6 @@ export function Profile() {
           </button>
         </form>
       </div>
-      <p style={{ marginTop: 16 }}>
-        <BackButton to="/home" label="Back to dashboard" />
-      </p>
     </div>
   );
 }

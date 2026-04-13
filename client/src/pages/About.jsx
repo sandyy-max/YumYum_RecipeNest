@@ -17,34 +17,42 @@ export function About() {
           About YumYum
         </h1>
         <p className="yy-section-sub" style={{ textAlign: 'left', marginBottom: '1.75rem' }}>
-          A recipe nest built for quality, trust, and learning.
+          A modern recipe platform where great food stories are shared, reviewed, and trusted.
         </p>
 
-        <div className="yy-two-col">
-          <div className="yy-glass" style={{ padding: '1.25rem' }}>
-            <h2 style={{ marginTop: 0 }}>Why this platform</h2>
-            <p style={{ color: 'var(--yy-muted)' }}>
-              Chefs publish recipes through a clear status pipeline. Admin moderation helps ensure recipes meet quality
-              standards before they appear in the public experience.
-            </p>
-          </div>
-          <div className="yy-glass" style={{ padding: '1.25rem' }}>
-            <h2 style={{ marginTop: 0 }}>How it works</h2>
-            <p style={{ color: 'var(--yy-muted)' }}>
-              Users can browse and view recipe details without login. Authenticated users can like, save, and review
-              approved recipes. Chefs manage their own submissions.
-            </p>
-          </div>
+        <div className="yy-glass" style={{ padding: '1.6rem', maxWidth: 980 }}>
+          <h2 style={{ marginTop: 0 }}>Our mission</h2>
+          <p style={{ color: 'var(--yy-muted)' }}>
+            YumYum is built to make discovering recipes simple and reliable. We combine chef creativity with quality
+            moderation, so users get recipes they can actually trust and cook confidently at home.
+          </p>
+
+          <h2>Why people use YumYum</h2>
+          <p style={{ color: 'var(--yy-muted)' }}>
+            Visitors can explore approved recipes without friction. Signed-in users can save favorites, add reviews,
+            and build their own cooking journey. Every interaction is designed to feel clean, fast, and useful.
+          </p>
+
+          <h2>How quality is maintained</h2>
+          <p style={{ color: 'var(--yy-muted)' }}>
+            Chef submissions pass through a moderation workflow before they become public. This keeps content standards
+            high and helps maintain a consistent experience for every user.
+          </p>
+
+          <h2>What makes us different</h2>
+          <ul style={{ margin: '0.5rem 0 0', color: 'var(--yy-muted)' }}>
+            <li>Chef-first publishing with clear approvals and feedback.</li>
+            <li>Clean role-based workflows for users, chefs, and admins.</li>
+            <li>A focused interface built for everyday cooking, not clutter.</li>
+          </ul>
         </div>
 
-        <div style={{ marginTop: '1.25rem' }} className="yy-glass">
-          <div style={{ padding: '1.25rem' }}>
-            <h2 style={{ marginTop: 0 }}>Core values</h2>
-            <p style={{ color: 'var(--yy-muted)' }}>
-              Clear moderation, respectful community feedback, and a smooth workflow for chefs so the best recipes stay
-              visible.
-            </p>
-          </div>
+        <div className="yy-glass" style={{ marginTop: '1.25rem', padding: '1.3rem', maxWidth: 980 }}>
+          <h2 style={{ marginTop: 0 }}>Our promise</h2>
+          <p style={{ color: 'var(--yy-muted)', marginBottom: 0 }}>
+            We keep improving the platform so it remains professional, easy to use, and genuinely helpful for anyone
+            who loves food.
+          </p>
         </div>
       </section>
     </>

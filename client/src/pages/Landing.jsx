@@ -1,25 +1,34 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { PublicHeader } from '../components/PublicHeader.jsx';
-import { ContactForm } from '../components/ContactForm.jsx';
 import { http } from '../api/http.js';
 import { IMG, recipeImage } from '../lib/assets.js';
 import { Logo } from '../components/Logo.jsx';
+
+function pickCategoryImage(cat) {
+  const key = `${cat?.slug || ''} ${cat?.name || ''}`.toLowerCase();
+  if (key.includes('breakfast')) return IMG.catBreakfast;
+  if (key.includes('dessert')) return IMG.catDessert;
+  if (key.includes('appetizer') || key.includes('starter')) return IMG.catApp;
+  if (key.includes('main')) return IMG.catMain;
+  return IMG.recipeFallback;
+}
 
 export function Landing() {
   const [q, setQ] = useState('');
   const [recipes, setRecipes] = useState([]);
   const [chefs, setChefs] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
 
   useEffect(() => {
     let cancelled = false;
     (async () => {
       try {
-        const [r, c] = await Promise.all([
+        const [r, c, cat] = await Promise.all([
           http.get('/api/recipes', { params: { limit: 9 } }),
           http.get('/api/chefs'),
+          http.get('/api/categories'),
         ]);
         if (cancelled) return;
         const approvedWithPics = (r.data.recipes || []).filter(
@@ -27,8 +36,20 @@ export function Landing() {
         );
         setRecipes(approvedWithPics);
         setChefs(c.data.chefs || []);
+        const counts = new Map();
+        for (const recipe of r.data.recipes || []) {
+          const id = String(recipe.category?._id || '');
+          if (!id) continue;
+          counts.set(id, (counts.get(id) || 0) + 1);
+        }
+        const withCounts = (cat.data.categories || []).map((x) => ({
+          ...x,
+          count: counts.get(String(x._id)) || 0,
+          image: pickCategoryImage(x),
+        }));
+        setCategories(withCounts);
       } catch (e) {
-        if (!cancelled) setError(e.message);
+        if (!cancelled) setCategories([]);
       } finally {
         if (!cancelled) setLoading(false);
       }
@@ -65,8 +86,8 @@ export function Landing() {
         <img className="yy-hero-img" src={IMG.heroSalad} alt="" />
       </section>
 
-      <section className="yy-section yy-anchor-section" id="stats" style={{ background: `url(${IMG.wood}) center/cover fixed` }}>
-        <div className="yy-glass" style={{ padding: '2rem 1rem' }}>
+      <section className="yy-section yy-anchor-section yy-landing-animate" id="stats" style={{ background: `url(${IMG.wood}) center/cover fixed` }}>
+        <div className="yy-glass yy-hover-lift" style={{ padding: '2rem 1rem' }}>
           <h2 className="yy-section-title">Stats</h2>
           <p className="yy-section-sub">Community at a glance</p>
           <div className="yy-stat-row">
@@ -85,14 +106,37 @@ export function Landing() {
         </div>
       </section>
 
-      <section className="yy-section yy-anchor-section" id="chefs">
+      <section className="yy-section yy-anchor-section yy-landing-animate" id="recipes">
+        <h2 className="yy-section-title">Recipes</h2>
+        <p className="yy-section-sub">Approved recipes with pictures</p>
+        <div className="yy-grid-recipes">
+          {loading ? <div className="yy-loading">Loading…</div> : null}
+          {!loading && recipes.length
+            ? recipes.map((r) => (
+                <div key={r._id} className="yy-card-recipe yy-glass yy-hover-lift">
+                  <img src={recipeImage(r.imageUrl)} alt="" />
+                  <h3>{r.title}</h3>
+                  <div className="meta">
+                    {r.category?.name || 'Category'} · {r.cookingTimeMinutes} mins
+                  </div>
+                  <Link to={`/recipes/${r._id}`} className="yy-btn yy-btn-primary">
+                    View recipe
+                  </Link>
+                </div>
+              ))
+            : null}
+          {!loading && !recipes.length ? <p style={{ color: 'var(--yy-muted)' }}>No recipes yet.</p> : null}
+        </div>
+      </section>
+
+      <section className="yy-section yy-anchor-section yy-landing-animate" id="chefs">
         <h2 className="yy-section-title">Chefs</h2>
         <p className="yy-section-sub">Active chefs and their approved recipes</p>
         <div className="yy-staff-grid">
           {loading ? <div className="yy-loading">Loading…</div> : null}
           {!loading && chefs.length
             ? chefs.map((c) => (
-                <article key={c._id} className="yy-glass yy-staff-card">
+                <article key={c._id} className="yy-glass yy-staff-card yy-hover-lift">
                   <div style={{ display: 'grid', gridTemplateColumns: '90px 1fr', gap: 16, alignItems: 'start' }}>
                     <img
                       src={recipeImage(c.avatarUrl)}
@@ -117,99 +161,33 @@ export function Landing() {
         </div>
       </section>
 
-      <section className="yy-section">
-        <h2 className="yy-section-title">Explore categories</h2>
-        <p className="yy-section-sub">Browse by cuisine type</p>
+      <section className="yy-section yy-anchor-section yy-landing-animate" id="categories">
+        <h2 className="yy-section-title">Categories</h2>
+        <p className="yy-section-sub">Connected to chef recipe category selection</p>
         <div className="yy-grid-recipes" style={{ gridTemplateColumns: 'repeat(auto-fit,minmax(240px,1fr))' }}>
-          {[
-            ['Breakfast', IMG.catBreakfast, '50+'],
-            ['Dessert', IMG.catDessert, '40+'],
-            ['Appetizer', IMG.catApp, '60+'],
-            ['Main course', IMG.catMain, '120+'],
-          ].map(([name, src, count]) => (
+          {categories.map((cat) => (
             <Link
-              key={name}
-              to="/recipes"
-              className="yy-glass"
+              key={cat._id}
+              to={`/recipes?category=${cat._id}`}
+              className="yy-glass yy-hover-lift"
               style={{
                 position: 'relative',
                 minHeight: 200,
                 borderRadius: 16,
                 overflow: 'hidden',
                 display: 'block',
-                backgroundImage: `linear-gradient(180deg,transparent 40%,rgba(0,0,0,.85)),url(${src})`,
+                backgroundImage: `linear-gradient(180deg,transparent 40%,rgba(0,0,0,.85)),url(${cat.image})`,
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
               }}
             >
               <div style={{ position: 'absolute', bottom: 16, left: 16, right: 16 }}>
-                <strong style={{ fontSize: '1.25rem' }}>{name}</strong>
-                <div style={{ color: 'var(--yy-muted)', fontSize: '0.85rem' }}>{count} recipes</div>
+                <strong style={{ fontSize: '1.25rem' }}>{cat.name}</strong>
+                <div style={{ color: 'var(--yy-muted)', fontSize: '0.85rem' }}>{cat.count} recipes</div>
               </div>
             </Link>
           ))}
-        </div>
-      </section>
-
-      <section className="yy-section yy-anchor-section" id="about">
-        <div className="yy-glass" style={{ padding: '2rem', textAlign: 'center', maxWidth: 900, margin: '0 auto' }}>
-          <h2 className="yy-section-title" style={{ marginBottom: '0.75rem' }}>
-            About YumYum
-          </h2>
-          <p style={{ color: 'var(--yy-muted)', margin: '0 auto 1.25rem', maxWidth: 720 }}>
-            YumYum is a community-driven recipe platform where chefs publish, users discover, and everyone learns to cook with confidence.
-          </p>
-          <div className="yy-grid-recipes" style={{ marginTop: 24, gridTemplateColumns: 'repeat(auto-fit,minmax(240px,1fr))' }}>
-            {[
-              ['Curated quality', 'Better recipes through moderation and approvals.'],
-              ['Community supported', 'Save favorites and keep track of what you love.'],
-              ['Chef-first workflow', 'Chefs manage their recipes with a clear status pipeline.'],
-            ].map(([t, d]) => (
-              <article key={t} className="yy-card-recipe yy-glass" style={{ textAlign: 'left' }}>
-                <h3 style={{ marginTop: 0 }}>{t}</h3>
-                <p className="meta" style={{ marginBottom: 0, fontSize: '0.9rem' }}>
-                  {d}
-                </p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="yy-section yy-anchor-section" id="recipes">
-        <h2 className="yy-section-title">Recipes</h2>
-        <p className="yy-section-sub">Approved recipes with pictures</p>
-        <div className="yy-grid-recipes">
-          {loading ? <div className="yy-loading">Loading…</div> : null}
-          {!loading && recipes.length
-            ? recipes.map((r) => (
-                <div key={r._id} className="yy-card-recipe yy-glass">
-                  <img src={recipeImage(r.imageUrl)} alt="" />
-                  <h3>{r.title}</h3>
-                  <div className="meta">
-                    {r.category?.name || 'Category'} · {r.cookingTimeMinutes} mins
-                  </div>
-                  <Link to={`/recipes/${r._id}`} className="yy-btn yy-btn-primary">
-                    View recipe
-                  </Link>
-                </div>
-              ))
-            : null}
-          {!loading && !recipes.length ? <p style={{ color: 'var(--yy-muted)' }}>No recipes yet.</p> : null}
-        </div>
-      </section>
-
-      <section className="yy-section yy-anchor-section" id="contact">
-        <div className="yy-glass" style={{ padding: '2rem', maxWidth: 980, margin: '0 auto' }}>
-          <h2 className="yy-section-title" style={{ textAlign: 'left', marginBottom: '0.75rem' }}>
-            Contact admin
-          </h2>
-          <p className="yy-section-sub" style={{ textAlign: 'left', marginTop: -8 }}>
-            Send your name, email, and message. Admin can review your submission.
-          </p>
-          <div style={{ marginTop: 18 }}>
-            <ContactForm />
-          </div>
+          {!loading && !categories.length ? <p style={{ color: 'var(--yy-muted)' }}>No categories yet.</p> : null}
         </div>
       </section>
 
@@ -225,7 +203,9 @@ export function Landing() {
           </div>
           <div>
             <strong>Links</strong>
-            <Link to="/#about">About</Link>
+            <Link to="/about">About</Link>
+            <br />
+            <Link to="/contact">Contact</Link>
             <br />
             <Link to="/recipes">Recipes</Link>
           </div>

@@ -17,7 +17,7 @@ export function UserShell() {
         <NavLink to="/home" className={linkClass}>
           Dashboard
         </NavLink>
-        <NavLink to="/recipes" className={linkClass}>
+        <NavLink to="/home/recipes" className={linkClass}>
           Recipes
         </NavLink>
         <NavLink to="/saved" className={linkClass}>
