@@ -1,0 +1,51 @@
+import { NavLink, Outlet, useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext.jsx';
+import { Logo } from './Logo.jsx';
+
+const linkClass = ({ isActive }) => (isActive ? 'active' : '');
+
+export function AdminShell() {
+  const { logout, user } = useAuth();
+  const navigate = useNavigate();
+  return (
+    <div className="yy-shell">
+      <aside className="yy-sidebar">
+        <Logo to="/admin/dashboard" />
+        <p style={{ color: 'var(--yy-muted)', fontSize: '0.8rem', margin: '0.5rem 0 1rem' }}>
+          Admin · {user?.name}
+        </p>
+        <NavLink to="/admin/dashboard" end className={linkClass}>
+          Dashboard
+        </NavLink>
+        <NavLink to="/admin/users" className={linkClass}>
+          Manage Users
+        </NavLink>
+        <NavLink to="/admin/chefs" className={linkClass}>
+          Manage Chefs
+        </NavLink>
+        <NavLink to="/admin/recipes/pending" className={linkClass}>
+          Recipe Approval
+        </NavLink>
+        <NavLink to="/admin/contacts" className={linkClass}>
+          Contact messages
+        </NavLink>
+        <NavLink to="/admin/analytics" className={linkClass}>
+          Analytics
+        </NavLink>
+        <button
+          type="button"
+          className="logout"
+          onClick={() => {
+            logout();
+            navigate('/');
+          }}
+        >
+          Log out
+        </button>
+      </aside>
+      <main className="yy-main">
+        <Outlet />
+      </main>
+    </div>
+  );
+}
