@@ -133,40 +133,6 @@ If the seed script expects specific admin credentials via environment variables,
 <img width="1882" height="944" alt="image" src="https://github.com/user-attachments/assets/75e9592a-83ec-42ed-9d38-ab76b1ddbc2e" />
 
 
-
-
-## Upload to GitHub (Proper Guidance)
-
-### 1) Ensure secrets are not committed
-
-- Keep `server/.env` **only locally**.
-- Use `.env.example` files for documentation (already included as `server/.env.example`).
-
-### 2) Initialize git (skip if already a repo)
-
-```bash
-git init
-```
-
-### 3) Commit your code
-
-```bash
-git add .
-git commit -m "Initial commit"
-```
-
-### 4) Create a GitHub repository
-
-Create an empty repo on GitHub (no README, no license, no gitignore — since you already have files locally).
-
-### 5) Add remote and push
-
-```bash
-git remote add origin <YOUR_GITHUB_REPO_URL>
-git branch -M main
-git push -u origin main
-```
-
 ## Troubleshooting
 
 - **CORS error**: confirm `CLIENT_URL` in `server/.env` matches the frontend URL exactly.
