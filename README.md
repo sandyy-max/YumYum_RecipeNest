@@ -113,6 +113,28 @@ npm run seed:admin
 
 If the seed script expects specific admin credentials via environment variables, add them in `server/.env` before running.
 
+## Login Page
+<img width="1908" height="974" alt="image" src="https://github.com/user-attachments/assets/efd3b463-c92c-4ed0-a804-3e914e631e00" />
+
+## Sign Up page
+<img width="1903" height="973" alt="image" src="https://github.com/user-attachments/assets/3ac3268a-9f15-44c2-b74c-5da82293a4c2" />
+
+## User (FoodLover) Dashboard
+<img width="1890" height="955" alt="image" src="https://github.com/user-attachments/assets/8a1de895-25c1-435f-9d73-48436aca79c8" />
+
+<img width="1883" height="949" alt="image" src="https://github.com/user-attachments/assets/3396dbd0-7177-40f9-9ec2-275db6970844" />
+
+## Chef Dashboard
+<img width="1878" height="953" alt="image" src="https://github.com/user-attachments/assets/a5ee240b-f884-42fb-aa6e-d2b88e1251d7" />
+
+<img width="1877" height="947" alt="image" src="https://github.com/user-attachments/assets/41bb38bd-d5d1-45f9-a3cb-d842ef94ac1f" />
+
+## Admin Dashboard
+<img width="1882" height="944" alt="image" src="https://github.com/user-attachments/assets/75e9592a-83ec-42ed-9d38-ab76b1ddbc2e" />
+
+
+
+
 ## Upload to GitHub (Proper Guidance)
 
 ### 1) Ensure secrets are not committed
