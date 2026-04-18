@@ -4,6 +4,7 @@ import { recipeImage, IMG } from '../lib/assets.js';
 import { Link } from 'react-router-dom';
 import { BackButton } from '../components/BackButton.jsx';
 import { PublicHeader } from '../components/PublicHeader.jsx';
+import landingHeroBg from '../assets/landing-hero-bg.png';
 
 export function Staff() {
   const [chefs, setChefs] = useState([]);
@@ -30,7 +31,7 @@ export function Staff() {
 
   return (
     <>
-      <div className="yy-bg-blur" style={{ backgroundImage: `url(${IMG.bgFood})` }} />
+      <div className="yy-bg-blur" style={{ backgroundImage: `url(${landingHeroBg})` }} />
       <div className="yy-overlay" />
       <PublicHeader search={search} onSearchChange={setSearch} />
       <section className="yy-section">

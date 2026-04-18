@@ -4,6 +4,7 @@ import { http } from '../api/http.js';
 import { recipeImage, IMG } from '../lib/assets.js';
 import { PublicHeader } from '../components/PublicHeader.jsx';
 import { BackButton } from '../components/BackButton.jsx';
+import landingHeroBg from '../assets/landing-hero-bg.png';
 
 export function Recipes({ showHeader = true, backTo = '/home' }) {
   const [params] = useSearchParams();
@@ -38,7 +39,7 @@ export function Recipes({ showHeader = true, backTo = '/home' }) {
 
   return (
     <>
-      <div className="yy-bg-blur" style={{ backgroundImage: `url(${IMG.bgFood})` }} />
+      <div className="yy-bg-blur" style={{ backgroundImage: `url(${landingHeroBg})` }} />
       <div className="yy-overlay" />
       {showHeader ? <PublicHeader search={search} onSearchChange={setSearch} /> : null}
       <section className="yy-section">

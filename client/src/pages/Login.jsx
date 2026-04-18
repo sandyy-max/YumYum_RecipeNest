@@ -4,6 +4,7 @@ import { useAuth } from '../context/AuthContext.jsx';
 import { IMG } from '../lib/assets.js';
 import { Logo } from '../components/Logo.jsx';
 import { BackButton } from '../components/BackButton.jsx';
+import landingHeroBg from '../assets/landing-hero-bg.png';
 
 export function Login() {
   const { login } = useAuth();
@@ -34,7 +35,7 @@ export function Login() {
 
   return (
     <>
-      <div className="yy-bg-blur" style={{ backgroundImage: `url(${IMG.bgFood})` }} />
+      <div className="yy-bg-blur" style={{ backgroundImage: `url(${landingHeroBg})` }} />
       <div className="yy-overlay" />
       <div className="yy-auth-wrap">
         <div className="yy-auth-card yy-glass">

@@ -6,6 +6,7 @@ import { recipeImage } from '../lib/assets.js';
 import { IMG } from '../lib/assets.js';
 import { PublicHeader } from '../components/PublicHeader.jsx';
 import { BackButton } from '../components/BackButton.jsx';
+import landingHeroBg from '../assets/landing-hero-bg.png';
 
 export function RecipeDetail({ showHeader = true, backTo = '/recipes' }) {
   const { id } = useParams();
@@ -82,7 +83,7 @@ export function RecipeDetail({ showHeader = true, backTo = '/recipes' }) {
   if (error && !recipe) {
     return (
       <>
-        <div className="yy-bg-blur" style={{ backgroundImage: `url(${IMG.bgFood})` }} />
+        <div className="yy-bg-blur" style={{ backgroundImage: `url(${landingHeroBg})` }} />
         {showHeader ? <PublicHeader search={q} onSearchChange={setQ} /> : null}
         <p className="yy-err" style={{ padding: 24 }}>
           {error}
@@ -93,7 +94,7 @@ export function RecipeDetail({ showHeader = true, backTo = '/recipes' }) {
   if (!recipe) {
     return (
       <>
-        <div className="yy-bg-blur" style={{ backgroundImage: `url(${IMG.bgFood})` }} />
+        <div className="yy-bg-blur" style={{ backgroundImage: `url(${landingHeroBg})` }} />
         {showHeader ? <PublicHeader search={q} onSearchChange={setQ} /> : null}
         <div className="yy-loading">Loading…</div>
       </>
@@ -102,7 +103,7 @@ export function RecipeDetail({ showHeader = true, backTo = '/recipes' }) {
 
   return (
     <>
-      <div className="yy-bg-blur" style={{ backgroundImage: `url(${IMG.bgFood})` }} />
+      <div className="yy-bg-blur" style={{ backgroundImage: `url(${landingHeroBg})` }} />
       <div className="yy-overlay" />
       {showHeader ? <PublicHeader search={q} onSearchChange={setQ} /> : null}
       <section className="yy-section">

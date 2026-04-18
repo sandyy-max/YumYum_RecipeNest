@@ -65,6 +65,8 @@ export function Landing() {
 
   return (
     <>
+      <div className="yy-bg-blur" style={{ backgroundImage: `url(${landingHeroBg})` }} />
+      <div className="yy-overlay" />
       <PublicHeader search={q} onSearchChange={setQ} />
 
       <section className="yy-section yy-section--tight yy-anchor-section" id="home">
