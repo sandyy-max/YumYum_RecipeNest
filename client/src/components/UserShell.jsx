@@ -11,9 +11,12 @@ export function UserShell() {
   return (
     <div className="yy-shell" style={{ ['--yy-shell-bg']: `url(${landingHeroBg})` }}>
       <aside className="yy-sidebar">
-        <Logo to="/home" />
-        <p style={{ color: 'var(--yy-muted)', fontSize: '0.8rem', margin: '0.5rem 0 1rem' }}>
+        <div className="yy-sidebar-logo">
+          <Logo to="/home" />
+        </div>
+        <p className="yy-sidebar-user">
           {user?.name}
+          <small>User</small>
         </p>
         <NavLink to="/home" className={linkClass}>
           Dashboard

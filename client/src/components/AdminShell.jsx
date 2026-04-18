@@ -11,9 +11,12 @@ export function AdminShell() {
   return (
     <div className="yy-shell" style={{ ['--yy-shell-bg']: `url(${landingHeroBg})` }}>
       <aside className="yy-sidebar">
-        <Logo to="/admin/dashboard" />
-        <p style={{ color: 'var(--yy-muted)', fontSize: '0.8rem', margin: '0.5rem 0 1rem' }}>
-          Admin · {user?.name}
+        <div className="yy-sidebar-logo">
+          <Logo to="/admin/dashboard" />
+        </div>
+        <p className="yy-sidebar-user">
+          {user?.name}
+          <small>Admin</small>
         </p>
         <NavLink to="/admin/dashboard" end className={linkClass}>
           Dashboard

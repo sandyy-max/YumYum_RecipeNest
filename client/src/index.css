@@ -779,15 +779,41 @@ a:hover {
   flex-direction: column;
   gap: 0.25rem;
 }
+
+.yy-sidebar-logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.35rem 0 0.75rem;
+}
+
+.yy-sidebar-user {
+  text-align: center;
+  color: rgba(244, 247, 244, 0.92);
+  font-size: 0.98rem;
+  font-weight: 650;
+  margin: 0.35rem 0 1.1rem;
+}
+
+.yy-sidebar-user small {
+  display: block;
+  margin-top: 0.2rem;
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: var(--yy-muted);
+}
+
 .yy-sidebar a {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.65rem 0.75rem;
+  padding: 0.9rem 0.95rem;
   border-radius: 10px;
-  color: var(--yy-muted);
+  color: rgba(244, 247, 244, 0.92);
   text-decoration: none;
-  font-size: 0.9rem;
+  font-size: 1.05rem;
+  font-weight: 650;
+  letter-spacing: 0.01em;
 }
 .yy-sidebar a:hover,
 .yy-sidebar a.active {
