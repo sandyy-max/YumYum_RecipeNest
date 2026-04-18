@@ -32,7 +32,7 @@ export function Home() {
   }, []);
 
   return (
-    <div>
+    <div className="yy-page">
       <div
         className="yy-banner"
         style={{ backgroundImage: `url(${IMG.banner})` }}
@@ -60,23 +60,35 @@ export function Home() {
       ) : (
         <p className="yy-muted">Loading…</p>
       )}
-      <h2 style={{ fontSize: '1.1rem', color: 'var(--yy-muted)', marginBottom: 12 }}>Recently viewed</h2>
-      <div className="yy-grid-recipes">
-        {recent.map((rec) => (
-          <div key={rec._id} className="yy-card-recipe yy-glass">
-            <img src={recipeImage(rec.imageUrl)} alt="" />
-            <h3>{rec.title}</h3>
-            <div className="meta">
-              {rec.category?.name} · {rec.cookingTimeMinutes} mins
-            </div>
-            <Link to={`/home/recipes/${rec._id}`} className="yy-btn yy-btn-primary">
-              View full recipe
-            </Link>
+      <div className="yy-frame" style={{ marginTop: 16 }}>
+        <div className="yy-page-head">
+          <div>
+            <h2 style={{ margin: 0, fontSize: '1.25rem' }}>Recently viewed</h2>
+            <p style={{ margin: '0.35rem 0 0', color: 'var(--yy-muted)' }}>
+              Quickly jump back into recipes you opened recently.
+            </p>
           </div>
-        ))}
-        {!recent.length ? (
-          <p style={{ color: 'var(--yy-muted)' }}>Open recipes to build this list.</p>
-        ) : null}
+          <Link to="/home/recipes" className="yy-btn yy-btn-ghost">
+            Browse recipes
+          </Link>
+        </div>
+        <div className="yy-grid-recipes">
+          {recent.map((rec) => (
+            <div key={rec._id} className="yy-card-recipe yy-glass">
+              <img src={recipeImage(rec.imageUrl)} alt="" />
+              <h3>{rec.title}</h3>
+              <div className="meta">
+                {rec.category?.name} · {rec.cookingTimeMinutes} mins
+              </div>
+              <Link to={`/home/recipes/${rec._id}`} className="yy-btn yy-btn-primary">
+                View full recipe
+              </Link>
+            </div>
+          ))}
+          {!recent.length ? (
+            <p style={{ color: 'var(--yy-muted)' }}>Open recipes to build this list.</p>
+          ) : null}
+        </div>
       </div>
     </div>
   );

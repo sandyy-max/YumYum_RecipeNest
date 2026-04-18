@@ -4,6 +4,7 @@ import { PublicHeader } from '../components/PublicHeader.jsx';
 import { http } from '../api/http.js';
 import { IMG, recipeImage } from '../lib/assets.js';
 import { Logo } from '../components/Logo.jsx';
+import landingHeroBg from '../assets/landing-hero-bg.png';
 
 function pickCategoryImage(cat) {
   const key = `${cat?.slug || ''} ${cat?.name || ''}`.toLowerCase();
@@ -60,134 +61,109 @@ export function Landing() {
     };
   }, []);
 
+  const featured = recipes.slice(0, 3);
+
   return (
     <>
-      <div className="yy-bg-blur" style={{ backgroundImage: `url(${IMG.bgFood})` }} />
-      <div className="yy-overlay" />
       <PublicHeader search={q} onSearchChange={setQ} />
 
-      <section className="yy-hero yy-anchor-section" id="home">
-        <div>
-          <div className="yy-badge">Trending now - 500+ recipes</div>
-          <h1 className="yy-h1">YumYum</h1>
-          <p className="yy-tagline">Where Every Recipe Finds a Home.</p>
-          <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
-            <Link to="/register" className="yy-btn yy-btn-ghost">
-              Sign Up
-            </Link>
-            <Link to="/login" className="yy-btn yy-btn-primary">
-              Login
-            </Link>
-            <Link to="/recipes" className="yy-btn yy-btn-ghost">
-              Explore recipes
-            </Link>
-          </div>
-        </div>
-        <img className="yy-hero-img" src={IMG.heroSalad} alt="" />
-      </section>
-
-      <section className="yy-section yy-anchor-section yy-landing-animate" id="stats" style={{ background: `url(${IMG.wood}) center/cover fixed` }}>
-        <div className="yy-glass yy-hover-lift" style={{ padding: '2rem 1rem' }}>
-          <h2 className="yy-section-title">Stats</h2>
-          <p className="yy-section-sub">Community at a glance</p>
-          <div className="yy-stat-row">
-            {[
-              ['500+', 'Recipes'],
-              ['3500+', 'Happy users'],
-              ['35k+', '5-star reviews'],
-              ['130+', 'Active chefs'],
-            ].map(([n, l]) => (
-              <div key={l} className="yy-stat yy-glass" style={{ textAlign: 'center' }}>
-                <div className="num">{n}</div>
-                <div className="lbl">{l}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="yy-section yy-anchor-section yy-landing-animate" id="recipes">
-        <h2 className="yy-section-title">Recipes</h2>
-        <p className="yy-section-sub">Approved recipes with pictures</p>
-        <div className="yy-grid-recipes">
-          {loading ? <div className="yy-loading">Loading…</div> : null}
-          {!loading && recipes.length
-            ? recipes.map((r) => (
-                <div key={r._id} className="yy-card-recipe yy-glass yy-hover-lift">
-                  <img src={recipeImage(r.imageUrl)} alt="" />
-                  <h3>{r.title}</h3>
-                  <div className="meta">
-                    {r.category?.name || 'Category'} · {r.cookingTimeMinutes} mins
-                  </div>
-                  <Link to={`/recipes/${r._id}`} className="yy-btn yy-btn-primary">
-                    View recipe
+      <section className="yy-section yy-section--tight yy-anchor-section" id="home">
+        <div className="yy-container">
+          <div
+            className="yy-surface yy-hover-lift yy-hero-wrap yy-hero-glass"
+            style={{ ['--yy-hero-bg']: `url(${landingHeroBg})` }}
+          >
+            <div className="yy-hero yy-hero-grid yy-hero-glass-inner">
+              <div>
+                <div className="yy-badge">Trending now · 500+ recipes</div>
+                <h1 className="yy-h1">YumYum</h1>
+                <p className="yy-tagline">Where every recipe finds a home.</p>
+                <div className="yy-hero-actions">
+                  <Link to="/register" className="yy-btn yy-btn-ghost">
+                    Sign Up
+                  </Link>
+                  <Link to="/login" className="yy-btn yy-btn-primary">
+                    Login
                   </Link>
                 </div>
-              ))
-            : null}
-          {!loading && !recipes.length ? <p style={{ color: 'var(--yy-muted)' }}>No recipes yet.</p> : null}
-        </div>
-      </section>
-
-      <section className="yy-section yy-anchor-section yy-landing-animate" id="chefs">
-        <h2 className="yy-section-title">Chefs</h2>
-        <p className="yy-section-sub">Active chefs and their approved recipes</p>
-        <div className="yy-staff-grid">
-          {loading ? <div className="yy-loading">Loading…</div> : null}
-          {!loading && chefs.length
-            ? chefs.map((c) => (
-                <article key={c._id} className="yy-glass yy-staff-card yy-hover-lift">
-                  <div style={{ display: 'grid', gridTemplateColumns: '90px 1fr', gap: 16, alignItems: 'start' }}>
-                    <img
-                      src={recipeImage(c.avatarUrl)}
-                      alt=""
-                      style={{ width: 84, height: 84, borderRadius: 18, objectFit: 'cover', border: '1px solid rgba(255,255,255,0.08)' }}
-                    />
-                    <div>
-                      <h3 style={{ margin: 0 }}>{c.name}</h3>
-                      <p style={{ margin: '0.35rem 0 0', color: 'var(--yy-muted)' }}>{c.cuisineSpecialty || 'Specialty not set'}</p>
-                      <p style={{ margin: '0.75rem 0 0', color: 'var(--yy-green)' }}>{c.recipesCount || 0} recipes</p>
-                    </div>
-                  </div>
-                </article>
-              ))
-            : null}
-          {!loading && !chefs.length ? <p style={{ color: 'var(--yy-muted)' }}>No active chefs found.</p> : null}
-        </div>
-        <div style={{ marginTop: 14 }}>
-          <Link to="/staff" className="yy-btn yy-btn-ghost">
-            View all chefs
-          </Link>
-        </div>
-      </section>
-
-      <section className="yy-section yy-anchor-section yy-landing-animate" id="categories">
-        <h2 className="yy-section-title">Categories</h2>
-        <p className="yy-section-sub">Connected to chef recipe category selection</p>
-        <div className="yy-grid-recipes" style={{ gridTemplateColumns: 'repeat(auto-fit,minmax(240px,1fr))' }}>
-          {categories.map((cat) => (
-            <Link
-              key={cat._id}
-              to={`/recipes?category=${cat._id}`}
-              className="yy-glass yy-hover-lift"
-              style={{
-                position: 'relative',
-                minHeight: 200,
-                borderRadius: 16,
-                overflow: 'hidden',
-                display: 'block',
-                backgroundImage: `linear-gradient(180deg,transparent 40%,rgba(0,0,0,.85)),url(${cat.image})`,
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-              }}
-            >
-              <div style={{ position: 'absolute', bottom: 16, left: 16, right: 16 }}>
-                <strong style={{ fontSize: '1.25rem' }}>{cat.name}</strong>
-                <div style={{ color: 'var(--yy-muted)', fontSize: '0.85rem' }}>{cat.count} recipes</div>
               </div>
-            </Link>
-          ))}
-          {!loading && !categories.length ? <p style={{ color: 'var(--yy-muted)' }}>No categories yet.</p> : null}
+              <img className="yy-hero-img" src={IMG.heroSalad} alt="" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="yy-section yy-section--muted yy-anchor-section yy-landing-animate" id="recipes">
+        <div className="yy-container">
+          <h2 className="yy-section-title">Recipes</h2>
+          <p className="yy-section-sub">Handpicked by our community of food lovers</p>
+          <div className="yy-grid-recipes yy-grid-recipes--3">
+            {loading ? <div className="yy-loading">Loading...</div> : null}
+            {!loading && featured.length
+              ? featured.map((r) => (
+                  <div key={r._id} className="yy-card-recipe yy-surface yy-hover-lift" style={{ maxWidth: 340, margin: '0 auto', width: '100%' }}>
+                    <img src={recipeImage(r.imageUrl)} alt="" />
+                    <h3>{r.title}</h3>
+                    <div className="meta">
+                      {r.category?.name || 'Category'} · {r.cookingTimeMinutes} mins
+                    </div>
+                    <Link to={`/recipes/${r._id}`} className="yy-btn yy-btn-ghost">
+                      View Full Recipe
+                    </Link>
+                  </div>
+                ))
+              : null}
+          </div>
+        </div>
+      </section>
+
+      <section className="yy-section yy-anchor-section yy-landing-animate" id="stats">
+        <div className="yy-container">
+          <div className="yy-surface yy-hover-lift" style={{ padding: '2rem 1rem' }}>
+            <h2 className="yy-section-title">Stats</h2>
+            <p className="yy-section-sub">Community at a glance</p>
+            <div className="yy-stat-row">
+              {[
+                ['500+', 'Recipes'],
+                ['3500+', 'Happy users'],
+                ['35k+', '5-star reviews'],
+                ['130+', 'Active chefs'],
+              ].map(([n, l]) => (
+                <div key={l} className="yy-stat yy-surface" style={{ textAlign: 'center', boxShadow: 'none' }}>
+                  <div className="num">{n}</div>
+                  <div className="lbl">{l}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section
+        className="yy-section yy-section--muted yy-anchor-section yy-landing-animate"
+        id="categories"
+      >
+        <div className="yy-container">
+          <h2 className="yy-section-title">Explore Categories</h2>
+          <p className="yy-section-sub">Browse recipes by your favorite cuisine type</p>
+          <div className="yy-grid-recipes yy-grid-recipes--2" style={{ maxWidth: 980, margin: '0 auto' }}>
+            {categories.map((cat) => (
+              <Link
+                key={cat._id}
+                to={`/recipes?category=${cat._id}`}
+                className="yy-card-link yy-hover-lift"
+                style={{ ['--yy-cat-bg']: `url(${cat.image})` }}
+              >
+                <div className="yy-cat-card">
+                  <div className="yy-cat-card-content">
+                    <strong className="yy-cat-card-title">{cat.name}</strong>
+                    <div className="yy-cat-card-meta">{cat.count} recipes</div>
+                  </div>
+                </div>
+              </Link>
+            ))}
+            {!loading && !categories.length ? <p style={{ color: 'var(--yy-muted)' }}>No categories yet.</p> : null}
+          </div>
         </div>
       </section>
 
@@ -202,7 +178,7 @@ export function Landing() {
             hello@yumyum.local
           </div>
           <div>
-            <strong>Links</strong>
+            <strong>Helpful links</strong>
             <Link to="/about">About</Link>
             <br />
             <Link to="/contact">Contact</Link>
@@ -210,7 +186,7 @@ export function Landing() {
             <Link to="/recipes">Recipes</Link>
           </div>
           <div>
-            <strong>Connect</strong>
+            <strong>Connect with us</strong>
             Support · Events · News
           </div>
           <div>

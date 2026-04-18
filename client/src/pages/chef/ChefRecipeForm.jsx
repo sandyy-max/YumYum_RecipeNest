@@ -99,10 +99,18 @@ export function ChefRecipeForm() {
   }
 
   return (
-    <div style={{ maxWidth: 640 }}>
+    <div className="yy-page">
       <BackButton to="/chef/dashboard" label="Back to dashboard" />
-      <h1 style={{ marginTop: 12 }}>{isEdit ? 'Edit recipe' : 'Add new recipe'}</h1>
-      <form className="yy-glass" onSubmit={onSubmit} style={{ padding: '1.5rem', display: 'grid', gap: 14 }}>
+      <div className="yy-frame" style={{ marginTop: 16, maxWidth: 780 }}>
+        <div className="yy-page-head" style={{ marginBottom: 12 }}>
+          <div>
+            <h1 style={{ margin: 0 }}>{isEdit ? 'Edit recipe' : 'Add new recipe'}</h1>
+            <p style={{ margin: '0.35rem 0 0', color: 'var(--yy-muted)' }}>
+              {isEdit ? 'Update your recipe details and re-submit for review.' : 'Create a new recipe for review and approval.'}
+            </p>
+          </div>
+        </div>
+        <form className="yy-glass" onSubmit={onSubmit} style={{ padding: '1.5rem', display: 'grid', gap: 14 }}>
         <div className="yy-two-col">
           <label className="yy-input">
             Title
@@ -162,7 +170,8 @@ export function ChefRecipeForm() {
         >
           {isEdit ? 'Save changes' : 'Submit recipe'}
         </button>
-      </form>
+        </form>
+      </div>
     </div>
   );
 }

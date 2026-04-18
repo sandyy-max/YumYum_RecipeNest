@@ -29,7 +29,7 @@ export function AdminAnalytics() {
   }, []);
 
   return (
-    <div>
+    <div className="yy-page">
       <BackButton to="/admin/dashboard" label="Back to dashboard" />
       <h1 style={{ marginTop: 12 }}>Analytics</h1>
       {error ? <p className="yy-err">{error}</p> : null}
@@ -49,14 +49,16 @@ export function AdminAnalytics() {
           ))}
         </div>
       ) : null}
-      <h2 style={{ color: 'var(--yy-muted)', fontSize: '1rem' }}>By category</h2>
-      <ul className="yy-glass" style={{ padding: '1rem 1.5rem', margin: 0 }}>
+      <div className="yy-frame" style={{ marginTop: 16 }}>
+        <h2 style={{ color: 'var(--yy-muted)', fontSize: '1rem', marginTop: 0 }}>By category</h2>
+        <ul className="yy-glass" style={{ padding: '1rem 1.5rem', margin: 0 }}>
         {cats.map((row) => (
           <li key={row.category?._id || row.category?.slug}>
             {row.category?.name}: <strong>{row.count}</strong>
           </li>
         ))}
-      </ul>
+        </ul>
+      </div>
     </div>
   );
 }

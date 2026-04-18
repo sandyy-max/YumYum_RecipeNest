@@ -13,15 +13,23 @@ export function Contact() {
       <div className="yy-overlay" />
       <PublicHeader search={search} onSearchChange={setSearch} />
       <section className="yy-section">
-        <BackButton to="/" />
-        <h1 className="yy-section-title" style={{ textAlign: 'left', marginBottom: '1rem' }}>
-          Contact admin
-        </h1>
-        <p className="yy-section-sub" style={{ textAlign: 'left', marginTop: -10 }}>
-          Send your name, email, and message. Admin can review your submission.
-        </p>
-        <div className="yy-glass" style={{ marginTop: 18, padding: '1.25rem' }}>
-          <ContactForm />
+        <div className="yy-container">
+          <div className="yy-page">
+            <BackButton to="/" />
+            <div className="yy-frame" style={{ marginTop: 16 }}>
+              <div className="yy-page-head">
+                <div>
+                  <h1 style={{ margin: 0, letterSpacing: '0.08em', textTransform: 'uppercase' }}>Contact admin</h1>
+                  <p style={{ margin: '0.35rem 0 0', color: 'var(--yy-muted)' }}>
+                    Send your name, email, and message. Admin can review your submission.
+                  </p>
+                </div>
+              </div>
+              <div className="yy-glass" style={{ padding: '1.25rem' }}>
+                <ContactForm />
+              </div>
+            </div>
+          </div>
         </div>
       </section>
     </>

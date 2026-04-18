@@ -42,34 +42,46 @@ export function Recipes({ showHeader = true, backTo = '/home' }) {
       <div className="yy-overlay" />
       {showHeader ? <PublicHeader search={search} onSearchChange={setSearch} /> : null}
       <section className="yy-section">
-        <BackButton to={showHeader ? '/' : backTo} label="Back" />
-        <h1 className="yy-section-title" style={{ textAlign: 'left' }}>
-          Recipes
-        </h1>
-        <p className="yy-section-sub" style={{ textAlign: 'left' }}>
-          Search and browse approved recipes
-        </p>
-        {data.loading ? (
-          <div className="yy-loading">Loading…</div>
-        ) : (
-          <div className="yy-grid-recipes">
-            {data.recipes.map((r) => (
-              <div key={r._id} className="yy-card-recipe yy-glass">
-                <img src={recipeImage(r.imageUrl)} alt="" />
-                <h3>{r.title}</h3>
-                <div className="meta">
-                  {r.category?.name} · {r.cookingTimeMinutes} mins · ★ {r.averageRating || 0}
+        <div className="yy-container">
+          <div className="yy-page">
+            <BackButton to={showHeader ? '/' : backTo} label="Back" />
+            <div className="yy-frame" style={{ marginTop: 16 }}>
+              <div className="yy-page-head">
+                <div>
+                  <h1 style={{ margin: 0, letterSpacing: '0.08em', textTransform: 'uppercase' }}>Recipes</h1>
+                  <p style={{ margin: '0.35rem 0 0', color: 'var(--yy-muted)' }}>
+                    Search and browse approved recipes
+                  </p>
                 </div>
-                <Link to={showHeader ? `/recipes/${r._id}` : `/home/recipes/${r._id}`} className="yy-btn yy-btn-primary">
-                  View full recipe
-                </Link>
               </div>
-            ))}
+
+              {data.loading ? (
+                <div className="yy-loading">Loading…</div>
+              ) : (
+                <div className="yy-grid-recipes">
+                  {data.recipes.map((r) => (
+                    <div key={r._id} className="yy-card-recipe yy-glass">
+                      <img src={recipeImage(r.imageUrl)} alt="" />
+                      <h3>{r.title}</h3>
+                      <div className="meta">
+                        {r.category?.name} · {r.cookingTimeMinutes} mins · ★ {r.averageRating || 0}
+                      </div>
+                      <Link
+                        to={showHeader ? `/recipes/${r._id}` : `/home/recipes/${r._id}`}
+                        className="yy-btn yy-btn-primary"
+                      >
+                        View full recipe
+                      </Link>
+                    </div>
+                  ))}
+                </div>
+              )}
+              {!data.loading && !data.recipes.length ? (
+                <p style={{ color: 'var(--yy-muted)' }}>No recipes yet — add & approve as chef/admin.</p>
+              ) : null}
+            </div>
           </div>
-        )}
-        {!data.loading && !data.recipes.length ? (
-          <p style={{ color: 'var(--yy-muted)' }}>No recipes yet — add & approve as chef/admin.</p>
-        ) : null}
+        </div>
       </section>
     </>
   );

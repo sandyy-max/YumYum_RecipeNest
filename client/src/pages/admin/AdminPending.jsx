@@ -6,6 +6,7 @@ import { BackButton } from '../../components/BackButton.jsx';
 export function AdminPending() {
   const [recipes, setRecipes] = useState([]);
   const [error, setError] = useState('');
+  const [search, setSearch] = useState('');
 
   async function load() {
     try {
@@ -32,35 +33,63 @@ export function AdminPending() {
     }
   }
 
+  const filtered = recipes.filter((r) => {
+    const q = search.trim().toLowerCase();
+    if (!q) return true;
+    return (
+      r.title?.toLowerCase().includes(q) ||
+      r.chef?.name?.toLowerCase().includes(q) ||
+      r.category?.name?.toLowerCase().includes(q)
+    );
+  });
+
   return (
-    <div>
+    <div className="yy-page">
       <BackButton to="/admin/dashboard" label="Back to dashboard" />
       <h1 style={{ marginTop: 12 }}>Recipe approvals</h1>
+      <p style={{ marginTop: -4, color: 'var(--yy-muted)' }}>Review and approve recipes submitted by chefs</p>
+      <div className="yy-stat-row">
+        <div className="yy-stat yy-glass"><div className="num" style={{ color: '#ffd76e' }}>{recipes.length}</div><div className="lbl">Pending</div></div>
+        <div className="yy-stat yy-glass"><div className="num">{0}</div><div className="lbl">Approved</div></div>
+        <div className="yy-stat yy-glass"><div className="num" style={{ color: 'var(--yy-danger)' }}>{0}</div><div className="lbl">Rejected</div></div>
+      </div>
+      <input
+        className="yy-admin-search"
+        placeholder="Search recipes by title, chef, or category..."
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+      />
       {error ? <p className="yy-err">{error}</p> : null}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-        {recipes.map((r) => (
+      <div className="yy-admin-cards">
+        {filtered.map((r) => (
           <div
             key={r._id}
             className="yy-glass"
-            style={{ display: 'grid', gridTemplateColumns: '100px 1fr auto', gap: 16, padding: '0.75rem 1rem', alignItems: 'center' }}
+            style={{ overflow: 'hidden' }}
           >
-            <img src={recipeImage(r.imageUrl)} alt="" style={{ width: 88, height: 88, borderRadius: 12, objectFit: 'cover' }} />
-            <div>
-              <strong>{r.title}</strong>
-              <div style={{ fontSize: '0.85rem', color: 'var(--yy-muted)' }}>Chef: {r.chef?.name}</div>
+            <img src={recipeImage(r.imageUrl)} alt="" style={{ width: '100%', height: 160, objectFit: 'cover' }} />
+            <div style={{ padding: '0.9rem' }}>
+              <strong style={{ fontSize: '1.1rem' }}>{r.title}</strong>
+              <p style={{ margin: '0.35rem 0', color: 'var(--yy-muted)', minHeight: 42 }}>
+                {r.description || 'No description provided.'}
+              </p>
+              <div style={{ fontSize: '0.86rem', color: 'var(--yy-muted)' }}>
+                Chef {r.chef?.name} · {r.category?.name} · {new Date(r.createdAt).toLocaleDateString()}
+              </div>
             </div>
-            <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr auto auto', gap: 8, padding: '0 0.9rem 0.9rem' }}>
+              <button type="button" className="yy-btn yy-btn-ghost">Review</button>
               <button type="button" className="yy-btn yy-btn-primary" onClick={() => setStatus(r._id, 'approved')}>
-                Approve
+                ✓
               </button>
               <button type="button" className="yy-btn yy-btn-danger" onClick={() => setStatus(r._id, 'rejected')}>
-                Reject
+                ✕
               </button>
             </div>
           </div>
         ))}
       </div>
-      {!recipes.length ? <p style={{ color: 'var(--yy-muted)' }}>No pending recipes.</p> : null}
+      {!filtered.length ? <p style={{ color: 'var(--yy-muted)' }}>No pending recipes.</p> : null}
     </div>
   );
 }

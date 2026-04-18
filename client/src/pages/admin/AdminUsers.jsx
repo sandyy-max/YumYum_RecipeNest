@@ -29,7 +29,7 @@ export function AdminUsers() {
   }
 
   return (
-    <div>
+    <div className="yy-page">
       <BackButton to="/admin/dashboard" label="Back to dashboard" />
       <h1 style={{ marginTop: 12 }}>Manage users</h1>
       {error ? <p className="yy-err">{error}</p> : null}
