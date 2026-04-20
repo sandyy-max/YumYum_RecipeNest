@@ -48,7 +48,7 @@ export const listActiveChefs = asyncHandler(async (_req, res) => {
   const chefIds = chefs.map((c) => c._id);
   const recipes = await Recipe.find({ status: 'approved', chef: { $in: chefIds } })
     .populate('category', 'name slug')
-    .select('title imageUrl cookingTimeMinutes category likes averageRating createdAt')
+    .select('title imageUrl cookingTimeMinutes category chef likes averageRating createdAt')
     .lean()
     .sort({ createdAt: -1 });
 

@@ -164,6 +164,42 @@ a:hover {
   padding: 1.75rem;
 }
 
+.yy-hero-direct {
+  position: relative;
+  padding: clamp(0.7rem, 1.6vw, 1.1rem) 0;
+  min-height: clamp(300px, 43vw, 430px);
+  align-items: center;
+}
+
+.yy-hero-direct > * {
+  position: relative;
+  z-index: 1;
+}
+
+.yy-hero-copy {
+  padding-right: 0.25rem;
+  max-width: 680px;
+}
+
+.yy-hero-media {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.yy-hero-anim {
+  animation: yyServeTextIn 0.85s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.yy-hero-anim--1 {
+  animation-delay: 0.04s;
+}
+.yy-hero-anim--2 {
+  animation-delay: 0.12s;
+}
+.yy-hero-anim--3 {
+  animation-delay: 0.2s;
+}
+
 .yy-hero-glass {
   position: relative;
   overflow: hidden;
@@ -228,16 +264,40 @@ a:hover {
 
 .yy-hero-img {
   width: 100%;
-  max-width: 520px;
+  max-width: 620px;
   justify-self: end;
-  border-radius: 18px;
-  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.45);
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.yy-hero-img-float {
+  animation: yyHeroFloat 3.2s ease-in-out infinite;
+}
+
+.yy-hero-img-serve {
+  object-fit: contain;
+  filter: drop-shadow(0 30px 52px rgba(0, 0, 0, 0.5));
+  mix-blend-mode: screen;
+  animation:
+    yyServeFoodIn 0.95s cubic-bezier(0.16, 0.84, 0.2, 1) both,
+    yyHeroFloat 3.2s ease-in-out 1s infinite;
+}
+
+.yy-hero-title {
+  font-size: clamp(3.3rem, 7vw, 5.4rem);
+  line-height: 0.98;
 }
 
 @media (max-width: 900px) {
   .yy-hero-img {
     justify-self: start;
-    max-width: 520px;
+    max-width: 500px;
+  }
+  .yy-hero-media {
+    justify-content: flex-start;
+  }
+  .yy-hero-direct {
+    min-height: unset;
   }
 }
 
@@ -469,7 +529,7 @@ a:hover {
   color: rgba(244, 247, 244, 0.92);
   margin: 0 0 1.7rem;
   max-width: 30ch;
-  font-size: clamp(1.25rem, 2.6vw, 2rem);
+  font-size: clamp(1.35rem, 2.9vw, 2.2rem);
   line-height: 1.15;
   font-weight: 600;
 }
@@ -487,6 +547,124 @@ a:hover {
 .yy-staff-card {
   padding: 1.25rem;
   text-align: left;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.yy-staff-head {
+  display: grid;
+  grid-template-columns: 88px 1fr;
+  gap: 14px;
+  align-items: center;
+}
+
+.yy-staff-avatar {
+  width: 84px;
+  height: 84px;
+  border-radius: 18px;
+  object-fit: cover;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.yy-staff-meta {
+  min-width: 0;
+}
+
+.yy-staff-recipe-grid {
+  margin-top: 14px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.yy-staff-recipe-card {
+  padding: 12px;
+}
+
+.yy-staff-recipe-img {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.yy-staff-recipe-title {
+  margin-top: 10px;
+  font-weight: 650;
+  color: var(--yy-text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.yy-staff-recipe-sub {
+  margin-top: 6px;
+  color: var(--yy-muted);
+  font-size: 0.85rem;
+}
+
+@media (max-width: 900px) {
+  .yy-staff-recipe-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.yy-contact-frame {
+  max-width: 860px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.yy-contact-form textarea {
+  resize: vertical;
+  min-height: 120px;
+  max-height: 260px;
+}
+
+.yy-password-wrap {
+  position: relative;
+  display: grid;
+}
+
+.yy-password-wrap input {
+  padding-right: 3rem;
+}
+
+.yy-password-toggle {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: none;
+  background: transparent;
+  color: rgba(25, 30, 26, 0.7);
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.18s ease, background-color 0.18s ease, transform 0.18s ease;
+}
+
+.yy-password-toggle:hover {
+  background: rgba(25, 30, 26, 0.08);
+  color: rgba(25, 30, 26, 0.9);
+  transform: translateY(-50%) scale(1.05);
+}
+
+.yy-password-toggle:focus-visible {
+  outline: 2px solid rgba(110, 221, 90, 0.65);
+  outline-offset: 2px;
+}
+
+.yy-next-ico {
+  display: inline-block;
+  transform: translateY(-1px);
+  font-weight: 800;
 }
 
 .yy-staff-card h3 {
@@ -1020,6 +1198,42 @@ a:hover {
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@keyframes yyHeroFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes yyServeTextIn {
+  0% {
+    opacity: 0;
+    transform: translateX(-34px) scale(0.98);
+    filter: blur(4px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes yyServeFoodIn {
+  0% {
+    opacity: 0;
+    transform: translateX(52px) rotate(-4deg) scale(0.92);
+    filter: blur(6px) drop-shadow(0 18px 30px rgba(0, 0, 0, 0.3));
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) rotate(0deg) scale(1);
+    filter: blur(0) drop-shadow(0 30px 52px rgba(0, 0, 0, 0.5));
   }
 }
 

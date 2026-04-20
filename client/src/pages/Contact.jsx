@@ -17,7 +17,7 @@ export function Contact() {
         <div className="yy-container">
           <div className="yy-page">
             <BackButton to="/" />
-            <div className="yy-frame" style={{ marginTop: 16 }}>
+            <div className="yy-frame yy-contact-frame" style={{ marginTop: 16 }}>
               <div className="yy-page-head">
                 <div>
                   <h1 style={{ margin: 0, letterSpacing: '0.08em', textTransform: 'uppercase' }}>Contact admin</h1>
@@ -26,7 +26,7 @@ export function Contact() {
                   </p>
                 </div>
               </div>
-              <div className="yy-glass" style={{ padding: '1.25rem' }}>
+              <div className="yy-glass yy-contact-card" style={{ padding: '1.25rem' }}>
                 <ContactForm />
               </div>
             </div>

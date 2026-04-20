@@ -50,6 +50,7 @@ export const listRecipesValidators = [
   query('page').optional().isInt({ min: 1 }),
   query('limit').optional().isInt({ min: 1, max: 50 }),
   query('category').optional().isMongoId(),
+  query('chef').optional().isMongoId(),
   query('search').optional().trim(),
 ];
 
@@ -60,6 +61,9 @@ export const listRecipes = asyncHandler(async (req, res) => {
   const filter = { status: 'approved' };
   if (req.query.category) {
     filter.category = req.query.category;
+  }
+  if (req.query.chef) {
+    filter.chef = req.query.chef;
   }
   if (req.query.search) {
     const rx = new RegExp(escapeRegex(req.query.search), 'i');

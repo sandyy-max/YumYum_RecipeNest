@@ -5,6 +5,7 @@ import { http } from '../api/http.js';
 import { IMG, recipeImage } from '../lib/assets.js';
 import { Logo } from '../components/Logo.jsx';
 import landingHeroBg from '../assets/landing-hero-bg.png';
+import heroImg from '../assets/hero_img.png';
 
 function pickCategoryImage(cat) {
   const key = `${cat?.slug || ''} ${cat?.name || ''}`.toLowerCase();
@@ -71,25 +72,22 @@ export function Landing() {
 
       <section className="yy-section yy-section--tight yy-anchor-section" id="home">
         <div className="yy-container">
-          <div
-            className="yy-surface yy-hover-lift yy-hero-wrap yy-hero-glass"
-            style={{ ['--yy-hero-bg']: `url(${landingHeroBg})` }}
-          >
-            <div className="yy-hero yy-hero-grid yy-hero-glass-inner">
-              <div>
-                <div className="yy-badge">Trending now · 500+ recipes</div>
-                <h1 className="yy-h1">YumYum</h1>
-                <p className="yy-tagline">Where every recipe finds a home.</p>
-                <div className="yy-hero-actions">
-                  <Link to="/register" className="yy-btn yy-btn-ghost">
-                    Sign Up
-                  </Link>
-                  <Link to="/login" className="yy-btn yy-btn-primary">
-                    Login
-                  </Link>
-                </div>
+          <div className="yy-hero yy-hero-grid yy-hero-direct">
+            <div className="yy-hero-copy">
+              <div className="yy-badge">Trending now · 500+ recipes</div>
+              <h1 className="yy-h1 yy-hero-title yy-hero-anim yy-hero-anim--1">YumYum</h1>
+              <p className="yy-tagline yy-hero-anim yy-hero-anim--2">Where every recipe finds a home.</p>
+              <div className="yy-hero-actions yy-hero-anim yy-hero-anim--3">
+                <Link to="/register" className="yy-btn yy-btn-ghost">
+                  Sign Up
+                </Link>
+                <Link to="/login" className="yy-btn yy-btn-primary">
+                  Login
+                </Link>
               </div>
-              <img className="yy-hero-img" src={IMG.heroSalad} alt="" />
+            </div>
+            <div className="yy-hero-media yy-hero-anim yy-hero-anim--2">
+              <img className="yy-hero-img yy-hero-img-float yy-hero-img-serve" src={heroImg} alt="" />
             </div>
           </div>
         </div>
@@ -107,10 +105,10 @@ export function Landing() {
                     <img src={recipeImage(r.imageUrl)} alt="" />
                     <h3>{r.title}</h3>
                     <div className="meta">
-                      {r.category?.name || 'Category'} · {r.cookingTimeMinutes} mins
+                      {r.category?.name || 'Category'} · {r.cookingTimeMinutes} mins · Chef {r.chef?.name || '-'}
                     </div>
                     <Link to={`/recipes/${r._id}`} className="yy-btn yy-btn-ghost">
-                      View Full Recipe
+                      View Full Recipe <span className="yy-next-ico" aria-hidden="true">→</span>
                     </Link>
                   </div>
                 ))

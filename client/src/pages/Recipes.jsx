@@ -10,6 +10,7 @@ export function Recipes({ showHeader = true, backTo = '/home' }) {
   const [params] = useSearchParams();
   const initial = params.get('q') || '';
   const category = params.get('category') || '';
+  const chef = params.get('chef') || '';
   const [search, setSearch] = useState(initial);
   const [data, setData] = useState({ recipes: [], loading: true });
 
@@ -25,6 +26,7 @@ export function Recipes({ showHeader = true, backTo = '/home' }) {
           params: {
             search,
             ...(category ? { category } : {}),
+            ...(chef ? { chef } : {}),
           },
         });
         if (!cancelled) setData({ recipes: body.recipes, loading: false });
@@ -35,7 +37,7 @@ export function Recipes({ showHeader = true, backTo = '/home' }) {
     return () => {
       cancelled = true;
     };
-  }, [search, category]);
+  }, [search, category, chef]);
 
   return (
     <>
@@ -51,7 +53,7 @@ export function Recipes({ showHeader = true, backTo = '/home' }) {
                 <div>
                   <h1 style={{ margin: 0, letterSpacing: '0.08em', textTransform: 'uppercase' }}>Recipes</h1>
                   <p style={{ margin: '0.35rem 0 0', color: 'var(--yy-muted)' }}>
-                    Search and browse approved recipes
+                    {chef ? 'Browsing recipes by a chef' : 'Search and browse approved recipes'}
                   </p>
                 </div>
               </div>
@@ -65,13 +67,14 @@ export function Recipes({ showHeader = true, backTo = '/home' }) {
                       <img src={recipeImage(r.imageUrl)} alt="" />
                       <h3>{r.title}</h3>
                       <div className="meta">
-                        {r.category?.name} · {r.cookingTimeMinutes} mins · ★ {r.averageRating || 0}
+                        {r.category?.name} · {r.cookingTimeMinutes} mins · ★ {r.averageRating || 0} · Chef{' '}
+                        {r.chef?.name || '-'}
                       </div>
                       <Link
                         to={showHeader ? `/recipes/${r._id}` : `/home/recipes/${r._id}`}
                         className="yy-btn yy-btn-primary"
                       >
-                        View full recipe
+                        View full recipe <span className="yy-next-ico" aria-hidden="true">→</span>
                       </Link>
                     </div>
                   ))}

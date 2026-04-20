@@ -33,7 +33,7 @@ export function ContactForm({ onSubmitted }) {
   }
 
   return (
-    <form onSubmit={submit} style={{ display: 'grid', gap: 12 }}>
+    <form onSubmit={submit} className="yy-contact-form" style={{ display: 'grid', gap: 12 }}>
       <div className="yy-two-col">
         <label className="yy-input">
           Name
@@ -46,7 +46,12 @@ export function ContactForm({ onSubmitted }) {
       </div>
       <label className="yy-input">
         Message
-        <textarea value={reason} onChange={(e) => setReason(e.target.value)} rows={5} placeholder="Write your reason / message to admin" />
+        <textarea
+          value={reason}
+          onChange={(e) => setReason(e.target.value)}
+          rows={4}
+          placeholder="Write your reason / message to admin"
+        />
       </label>
       {error ? <p className="yy-err" style={{ margin: 0 }}>{error}</p> : null}
       {success ? <p style={{ margin: 0, color: 'var(--yy-green)' }}>{success}</p> : null}
