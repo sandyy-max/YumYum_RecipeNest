@@ -145,6 +145,33 @@ export const setReviewHidden = asyncHandler(async (req, res) => {
   res.json({ review });
 });
 
+export const listRecipeComments = asyncHandler(async (_req, res) => {
+  const comments = await Review.find()
+    .populate('user', 'name email')
+    .populate({
+      path: 'recipe',
+      select: 'title imageUrl status',
+      populate: { path: 'chef', select: 'name' },
+    })
+    .sort({ createdAt: -1 })
+    .lean();
+  res.json({ comments });
+});
+
+export const deleteReviewValidators = [param('id').isMongoId()];
+
+export const deleteReview = asyncHandler(async (req, res) => {
+  const review = await Review.findById(req.params.id);
+  if (!review) {
+    res.status(404).json({ message: 'Review not found' });
+    return;
+  }
+  const recipeId = review.recipe;
+  await review.deleteOne();
+  await recalcRecipeRatingForReview(recipeId);
+  res.json({ message: 'Review deleted' });
+});
+
 async function recalcRecipeRatingForReview(recipeId) {
   const stats = await Review.aggregate([
     { $match: { recipe: recipeId, hidden: false, rating: { $exists: true, $ne: null } } },

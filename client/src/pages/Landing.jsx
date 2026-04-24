@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { PublicHeader } from '../components/PublicHeader.jsx';
 import { http } from '../api/http.js';
@@ -22,6 +22,7 @@ export function Landing() {
   const [chefs, setChefs] = useState([]);
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
+  const sliderRef = useRef(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -62,7 +63,13 @@ export function Landing() {
     };
   }, []);
 
-  const featured = recipes.slice(0, 3);
+  const featured = recipes.slice(0, 9);
+
+  function slideRecipes(direction) {
+    if (!sliderRef.current) return;
+    const amount = Math.max(260, Math.floor(sliderRef.current.clientWidth * 0.7));
+    sliderRef.current.scrollBy({ left: direction * amount, behavior: 'smooth' });
+  }
 
   return (
     <>
@@ -97,22 +104,32 @@ export function Landing() {
         <div className="yy-container">
           <h2 className="yy-section-title">Recipes</h2>
           <p className="yy-section-sub">Handpicked by our community of food lovers</p>
-          <div className="yy-grid-recipes yy-grid-recipes--3">
-            {loading ? <div className="yy-loading">Loading...</div> : null}
-            {!loading && featured.length
-              ? featured.map((r) => (
-                  <div key={r._id} className="yy-card-recipe yy-surface yy-hover-lift" style={{ maxWidth: 340, margin: '0 auto', width: '100%' }}>
-                    <img src={recipeImage(r.imageUrl)} alt="" />
-                    <h3>{r.title}</h3>
-                    <div className="meta">
-                      {r.category?.name || 'Category'} · {r.cookingTimeMinutes} mins · Chef {r.chef?.name || '-'}
+          <div className="yy-recipes-slider-wrap">
+            <div className="yy-recipes-slider-track" ref={sliderRef}>
+              {loading ? <div className="yy-loading">Loading...</div> : null}
+              {!loading && featured.length
+                ? featured.map((r) => (
+                    <div key={r._id} className="yy-card-recipe yy-surface yy-hover-lift yy-card-recipe--slider">
+                      <img src={recipeImage(r.imageUrl)} alt="" />
+                      <h3>{r.title}</h3>
+                      <div className="meta">{r.category?.name || 'Category'}</div>
+                      <div className="meta">Time Needs: {r.cookingTimeMinutes} Mins</div>
+                      <div className="meta">Chef {r.chef?.name || '-'}</div>
+                      <Link to={`/recipes/${r._id}`} className="yy-btn yy-btn-ghost yy-recipe-view-btn">
+                        View Full Recipe
+                      </Link>
                     </div>
-                    <Link to={`/recipes/${r._id}`} className="yy-btn yy-btn-ghost">
-                      View Full Recipe <span className="yy-next-ico" aria-hidden="true">→</span>
-                    </Link>
-                  </div>
-                ))
-              : null}
+                  ))
+                : null}
+            </div>
+            <div className="yy-recipes-slider-head">
+              <button type="button" className="yy-slider-nav yy-slider-nav--left" onClick={() => slideRecipes(-1)}>
+                &lt;
+              </button>
+              <button type="button" className="yy-slider-nav yy-slider-nav--right" onClick={() => slideRecipes(1)}>
+                &gt;
+              </button>
+            </div>
           </div>
         </div>
       </section>

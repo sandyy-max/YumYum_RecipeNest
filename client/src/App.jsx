@@ -21,8 +21,8 @@ import { AdminDashboard } from './pages/admin/AdminDashboard.jsx';
 import { AdminUsers } from './pages/admin/AdminUsers.jsx';
 import { AdminChefs } from './pages/admin/AdminChefs.jsx';
 import { AdminPending } from './pages/admin/AdminPending.jsx';
-import { AdminAnalytics } from './pages/admin/AdminAnalytics.jsx';
 import { AdminContacts } from './pages/admin/AdminContacts.jsx';
+import { AdminRecipeComments } from './pages/admin/AdminRecipeComments.jsx';
 
 function RootRoute() {
   const { user, loading } = useAuth();
@@ -94,7 +94,7 @@ export default function App() {
         <Route path="/admin/chefs" element={<AdminChefs />} />
         <Route path="/admin/recipes/pending" element={<AdminPending />} />
         <Route path="/admin/contacts" element={<AdminContacts />} />
-        <Route path="/admin/analytics" element={<AdminAnalytics />} />
+        <Route path="/admin/recipe-comments" element={<AdminRecipeComments />} />
         <Route path="/admin/profile" element={<Profile />} />
       </Route>
 

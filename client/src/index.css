@@ -179,6 +179,8 @@ a:hover {
 .yy-hero-copy {
   padding-right: 0.25rem;
   max-width: 680px;
+  justify-self: center;
+  padding-left: clamp(0.6rem, 2vw, 1.4rem);
 }
 
 .yy-hero-media {
@@ -187,17 +189,17 @@ a:hover {
 }
 
 .yy-hero-anim {
-  animation: yyServeTextIn 0.85s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  animation: yyServeTextIn 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) both;
 }
 
 .yy-hero-anim--1 {
-  animation-delay: 0.04s;
+  animation-delay: 0.2s;
 }
 .yy-hero-anim--2 {
-  animation-delay: 0.12s;
+  animation-delay: 0.45s;
 }
 .yy-hero-anim--3 {
-  animation-delay: 0.2s;
+  animation-delay: 0.7s;
 }
 
 .yy-hero-glass {
@@ -279,8 +281,8 @@ a:hover {
   filter: drop-shadow(0 30px 52px rgba(0, 0, 0, 0.5));
   mix-blend-mode: screen;
   animation:
-    yyServeFoodIn 0.95s cubic-bezier(0.16, 0.84, 0.2, 1) both,
-    yyHeroFloat 3.2s ease-in-out 1s infinite;
+    yyServeFoodIn 1.35s cubic-bezier(0.16, 0.84, 0.2, 1) both,
+    yyHeroFloat 3.2s ease-in-out 1.7s infinite;
 }
 
 .yy-hero-title {
@@ -706,12 +708,107 @@ a:hover {
   grid-template-columns: repeat(2, minmax(280px, 1fr));
 }
 
+.yy-recipes-slider-wrap {
+  max-width: 1120px;
+  margin: 0 auto;
+}
+
+.yy-recipes-slider-track {
+  display: flex;
+  justify-content: flex-start;
+  align-items: stretch;
+  margin: 0 auto;
+  grid-auto-flow: column;
+  gap: 1.2rem;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding: 0.2rem 0.2rem 0.5rem;
+}
+
+.yy-recipes-slider-track::-webkit-scrollbar {
+  display: none;
+}
+
+.yy-card-recipe--slider {
+  flex: 0 0 calc((100% - 2.4rem) / 3);
+  min-width: 0;
+  max-width: 100%;
+  margin: 0 auto;
+  border-radius: 26px;
+  border: 1px solid rgba(126, 217, 87, 0.38);
+  background:
+    radial-gradient(200px 130px at 50% 0%, rgba(110, 221, 90, 0.2), transparent 72%),
+    linear-gradient(180deg, rgba(42, 62, 48, 0.92), rgba(28, 44, 35, 0.8));
+  box-shadow: 0 20px 34px rgba(5, 15, 9, 0.45);
+  padding: 1rem 1rem 1.1rem;
+}
+
+.yy-card-recipe--slider img {
+  width: 165px;
+  height: 165px;
+}
+
+.yy-card-recipe--slider .meta {
+  margin-bottom: 0.2rem;
+  font-size: 0.78rem;
+}
+
+.yy-recipe-view-btn {
+  margin-top: 0.7rem;
+}
+
+.yy-recipes-slider-head {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.yy-slider-nav {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.34);
+  color: #fff;
+  font-size: 1.3rem;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+}
+
+.yy-slider-nav:hover {
+  transform: translateY(-1px);
+  border-color: rgba(255, 255, 255, 0.58);
+}
+
+.yy-slider-nav--left {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.yy-slider-nav--right {
+  background: rgba(0, 0, 0, 0.6);
+}
+
 @media (max-width: 900px) {
   .yy-grid-recipes--3 {
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   }
   .yy-grid-recipes--2 {
     grid-template-columns: 1fr;
+  }
+  .yy-card-recipe--slider {
+    flex: 0 0 calc((100% - 1.2rem) / 2);
+  }
+}
+
+@media (max-width: 640px) {
+  .yy-card-recipe--slider {
+    flex: 0 0 100%;
   }
 }
 
@@ -1159,28 +1256,231 @@ a:hover {
   gap: 14px;
 }
 
-.yy-admin-chart-line {
+.yy-admin-grid--lower {
+  grid-template-columns: 1fr 2fr;
+}
+
+.yy-admin-kpi-row {
+  margin-top: 14px;
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 8px;
-  align-items: end;
-  min-height: 170px;
+  grid-template-columns: repeat(4, minmax(160px, 1fr));
+  gap: 12px;
 }
 
-.yy-admin-chart-line > div {
-  border-radius: 8px 8px 2px 2px;
-  background: linear-gradient(180deg, rgba(80, 255, 145, 0.85), rgba(80, 255, 145, 0.18));
-  border: 1px solid rgba(126, 217, 87, 0.35);
+.yy-admin-kpi-card,
+.yy-admin-panel {
+  background: rgba(10, 14, 12, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  box-shadow: 0 16px 30px rgba(0, 0, 0, 0.28);
 }
 
-.yy-admin-row {
+.yy-admin-kpi-card {
+  padding: 0.9rem 1rem;
+}
+
+.yy-admin-kpi-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.yy-admin-kpi-icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(61, 143, 69, 0.22);
+}
+
+.yy-admin-kpi-trend {
+  color: #1de475;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.yy-admin-kpi-trend--warn {
+  color: #ffd76e;
+}
+
+.yy-admin-kpi-label {
+  margin-top: 0.7rem;
+  color: var(--yy-muted);
+  font-size: 0.78rem;
+}
+
+.yy-admin-kpi-value {
+  font-size: 2rem;
+  line-height: 1.1;
+}
+
+.yy-admin-panel {
+  padding: 1rem 1.1rem;
+}
+
+.yy-admin-panel-title {
+  font-size: 1.18rem;
+  font-weight: 700;
+}
+
+.yy-admin-panel-sub {
+  color: var(--yy-muted);
+  font-size: 0.85rem;
+}
+
+.yy-admin-panel-head-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 12px;
-  padding: 0.7rem 0.8rem;
+}
+
+.yy-admin-panel-head-row a {
+  color: #21d26a;
+  font-size: 0.86rem;
+}
+
+.yy-admin-legend {
+  margin-top: 0.65rem;
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+}
+
+.yy-admin-legend span {
+  font-size: 0.8rem;
+  color: var(--yy-muted);
+}
+
+.yy-admin-legend i {
+  width: 8px;
+  height: 8px;
+  display: inline-block;
+  border-radius: 999px;
+  margin-right: 5px;
+  background: #61df63;
+}
+
+.yy-admin-legend i.alt {
+  background: #5da2ff;
+}
+
+.yy-admin-growth-svg {
+  margin-top: 0.65rem;
+  width: 100%;
+  height: 220px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+  background: linear-gradient(180deg, rgba(10, 14, 12, 0.55), rgba(10, 14, 12, 0.9));
+}
+
+.yy-admin-donut-wrap {
+  margin-top: 0.9rem;
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  gap: 10px;
+  align-items: center;
+}
+
+.yy-admin-donut {
+  width: 150px;
+  height: 150px;
+  border-radius: 999px;
+  position: relative;
+}
+
+.yy-admin-donut::after {
+  content: '';
+  position: absolute;
+  inset: 35px;
+  border-radius: 999px;
+  background: rgba(10, 14, 12, 0.95);
+}
+
+.yy-admin-donut-wrap ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 6px;
+}
+
+.yy-admin-donut-wrap li {
+  display: flex;
+  justify-content: space-between;
+  color: #b7c4d6;
+  font-size: 0.85rem;
+}
+
+.yy-admin-week-bars {
+  margin-top: 10px;
+  min-height: 160px;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+  align-items: end;
+}
+
+.yy-admin-week-bars > div {
+  display: grid;
+  gap: 6px;
+  justify-items: center;
+}
+
+.yy-admin-week-bars b {
+  width: 16px;
+  border-radius: 8px 8px 3px 3px;
+  display: block;
+  background: linear-gradient(180deg, #3b96e1, rgba(59, 139, 225, 0.3));
+}
+
+.yy-admin-week-bars span {
+  color: var(--yy-muted);
+  font-size: 0.74rem;
+}
+
+.yy-admin-pending-list {
+  margin-top: 0.8rem;
+  display: grid;
+  gap: 10px;
+}
+
+.yy-admin-pending-item {
+  display: grid;
+  grid-template-columns: 52px 1fr auto;
+  gap: 10px;
+  align-items: center;
+  padding: 0.5rem;
   border-radius: 10px;
-  background: rgba(255, 255, 255, 0.04);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.yy-admin-pending-item img {
+  width: 52px;
+  height: 52px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.yy-admin-pending-item strong {
+  display: block;
+  font-size: 0.95rem;
+}
+
+.yy-admin-pending-item small {
+  color: var(--yy-muted);
+  font-size: 0.77rem;
+}
+
+.yy-admin-status-pill {
+  border-radius: 999px;
+  padding: 0.25rem 0.6rem;
+  font-size: 0.74rem;
+  color: #f6cb53;
+  background: rgba(246, 203, 83, 0.16);
+  border: 1px solid rgba(246, 203, 83, 0.35);
 }
 
 .yy-admin-cards {
@@ -1188,6 +1488,111 @@ a:hover {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   gap: 14px;
+}
+
+.yy-analytics-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 14px;
+}
+
+.yy-analytics-hero {
+  padding: 1.2rem;
+}
+
+.yy-analytics-amount {
+  margin-top: 0.35rem;
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--yy-green);
+}
+
+.yy-analytics-sub {
+  color: var(--yy-muted);
+  font-size: 0.9rem;
+}
+
+.yy-analytics-line {
+  margin-top: 1rem;
+  min-height: 120px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  align-items: end;
+  gap: 10px;
+}
+
+.yy-analytics-line > div {
+  border-radius: 12px 12px 4px 4px;
+  border: 1px solid rgba(126, 217, 87, 0.4);
+  background: linear-gradient(180deg, rgba(87, 163, 217, 0.95), rgba(126, 217, 87, 0.2));
+}
+
+.yy-analytics-donut-card {
+  padding: 1.2rem;
+}
+
+.yy-analytics-donut-card h3 {
+  margin: 0 0 12px;
+}
+
+.yy-analytics-donut-wrap {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 12px;
+  align-items: center;
+}
+
+.yy-analytics-donut {
+  width: 120px;
+  height: 120px;
+  border-radius: 999px;
+  background: conic-gradient(#6edd5a 0 38%, #7d65ff 38% 68%, #f08a43 68% 86%, #f9519a 86% 100%);
+  position: relative;
+}
+
+.yy-analytics-donut::after {
+  content: '';
+  position: absolute;
+  inset: 24px;
+  border-radius: 999px;
+  background: rgba(8, 11, 9, 0.9);
+}
+
+.yy-analytics-donut-wrap ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 6px;
+}
+
+.yy-analytics-donut-wrap li {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  color: var(--yy-muted);
+}
+
+.yy-analytics-mini-cards {
+  margin-top: 14px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 10px;
+}
+
+.yy-analytics-mini-card {
+  padding: 0.85rem 1rem;
+}
+
+.yy-analytics-mini-card div {
+  color: var(--yy-muted);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+}
+
+.yy-analytics-mini-card strong {
+  color: var(--yy-green);
+  font-size: 1.4rem;
 }
 
 @keyframes yyFadeUp {
@@ -1252,6 +1657,22 @@ a:hover {
 }
 @media (max-width: 700px) {
   .yy-two-col {
+    grid-template-columns: 1fr;
+  }
+  .yy-analytics-grid {
+    grid-template-columns: 1fr;
+  }
+  .yy-analytics-donut-wrap {
+    grid-template-columns: 1fr;
+  }
+  .yy-admin-kpi-row {
+    grid-template-columns: 1fr;
+  }
+  .yy-admin-grid,
+  .yy-admin-grid--lower {
+    grid-template-columns: 1fr;
+  }
+  .yy-admin-donut-wrap {
     grid-template-columns: 1fr;
   }
 }

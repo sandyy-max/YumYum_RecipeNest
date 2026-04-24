@@ -33,8 +33,8 @@ export function AdminShell() {
         <NavLink to="/admin/contacts" className={linkClass}>
           Contact messages
         </NavLink>
-        <NavLink to="/admin/analytics" className={linkClass}>
-          Analytics
+        <NavLink to="/admin/recipe-comments" className={linkClass}>
+          Recipe comments
         </NavLink>
         <NavLink to="/admin/profile" className={linkClass}>
           Profile

@@ -21,3 +21,13 @@ export const listContacts = asyncHandler(async (_req, res) => {
   res.json({ contacts });
 });
 
+export const deleteContact = asyncHandler(async (req, res) => {
+  const contact = await ContactMessage.findById(req.params.id);
+  if (!contact) {
+    res.status(404).json({ message: 'Contact message not found' });
+    return;
+  }
+  await contact.deleteOne();
+  res.json({ message: 'Contact deleted' });
+});
+
