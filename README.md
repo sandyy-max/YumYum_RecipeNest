@@ -1,3 +1,84 @@
+# YumYum Recipe Nest
+
+A role-based MERN recipe platform where:
+- **Users** browse, like, save, and comment on recipes
+- **Chefs** create and manage recipes
+- **Admins** moderate users, chefs, recipes, contacts, and recipe comments
+
+## Tech Stack
+
+- **Frontend:** React + Vite + React Router
+- **Backend:** Node.js + Express
+- **Database:** MongoDB + Mongoose
+- **Auth:** JWT (Bearer token)
+- **Uploads:** Multer
+
+## Project Structure
+
+```text
+khel_khatam_beta_mern/
+├─ client/            # React app
+├─ server/            # Express API
+└─ package.json       # Root scripts (run both apps)
+```
+
+## Quick Start
+
+### 1) Install
+
+```bash
+npm run install:all
+```
+
+### 2) Configure environment
+
+Create `server/.env`:
+
+```env
+NODE_ENV=development
+PORT=5000
+CLIENT_URL=http://localhost:5173
+MONGODB_URI=your_mongodb_connection_string
+JWT_SECRET=your_secret
+JWT_EXPIRES_IN=7d
+MAX_FILE_SIZE_BYTES=2097152
+```
+
+### 3) Run
+
+```bash
+npm run dev
+```
+
+- Frontend: `http://localhost:5173`
+- Backend: `http://localhost:5000`
+
+## Useful Commands
+
+- Run both apps: `npm run dev`
+- Run only backend: `npm run dev --prefix server`
+- Run only frontend: `npm run dev --prefix client`
+- Build frontend: `npm run build --prefix client`
+- Start backend (prod mode): `npm run start --prefix server`
+- Seed admin user: `npm run seed:admin`
+
+## Core Features
+
+- Role-based auth (`user`, `chef`, `admin`)
+- Recipe CRUD with approval flow (pending/approved/rejected)
+- Likes, saved recipes, and reviews/comments
+- Contact form + admin contact management
+- Admin recipe comment moderation
+
+## Troubleshooting
+
+- **`Not found` API errors:** ensure backend is running on port `5000`
+- **Mongo connection errors:** verify `MONGODB_URI` and network access
+- **CORS issues:** `CLIENT_URL` in `server/.env` must match frontend URL
+
+---
+
+For full system design and code flow, see `ARCHITECTURE.md`.
 # Recipe Nest (MERN)
 
 Full‑stack MERN app:
