@@ -4,6 +4,7 @@ import Recipe from '../models/Recipe.js';
 import Review from '../models/Review.js';
 import Category from '../models/Category.js';
 import { asyncHandler } from '../middleware/asyncHandler.js';
+import { isCloudinaryConfigured, uploadImageBuffer } from '../config/cloudinary.js';
 
 const populateRecipe = [
   { path: 'chef', select: 'name email cuisineSpecialty avatarUrl' },
@@ -139,7 +140,12 @@ export const createRecipe = asyncHandler(async (req, res) => {
   }
   let imageUrl = '';
   if (req.file) {
-    imageUrl = `/uploads/${req.file.filename}`;
+    if (isCloudinaryConfigured()) {
+      const upload = await uploadImageBuffer(req.file.buffer, { folder: 'recipe_nest/recipes' });
+      imageUrl = upload.secure_url;
+    } else {
+      imageUrl = `/uploads/${req.file.filename}`;
+    }
   }
   const recipe = await Recipe.create({
     title,
@@ -189,7 +195,12 @@ export const updateRecipe = asyncHandler(async (req, res) => {
     updates.instructions = parseStringArray(req.body.instructions);
   }
   if (req.file) {
-    updates.imageUrl = `/uploads/${req.file.filename}`;
+    if (isCloudinaryConfigured()) {
+      const upload = await uploadImageBuffer(req.file.buffer, { folder: 'recipe_nest/recipes' });
+      updates.imageUrl = upload.secure_url;
+    } else {
+      updates.imageUrl = `/uploads/${req.file.filename}`;
+    }
   }
   if (updates.category) {
     const cat = await Category.findById(updates.category);

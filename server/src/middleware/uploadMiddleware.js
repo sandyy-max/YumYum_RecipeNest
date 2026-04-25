@@ -2,6 +2,7 @@ import multer from 'multer';
 import path from 'path';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
+import { isCloudinaryConfigured } from '../config/cloudinary.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -11,7 +12,7 @@ if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir, { recursive: true });
 }
 
-const storage = multer.diskStorage({
+const diskStorage = multer.diskStorage({
   destination(_req, _file, cb) {
     cb(null, uploadDir);
   },
@@ -21,6 +22,9 @@ const storage = multer.diskStorage({
     cb(null, `${base}${ext}`);
   },
 });
+
+const memoryStorage = multer.memoryStorage();
+const storage = isCloudinaryConfigured() ? memoryStorage : diskStorage;
 
 const maxBytes = Number(process.env.MAX_FILE_SIZE_BYTES) || 2 * 1024 * 1024;
 
