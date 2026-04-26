@@ -212,7 +212,7 @@ export function Landing() {
           </div>
         </div>
         <p style={{ textAlign: 'center', marginTop: 24, fontSize: '0.8rem', color: 'var(--yy-muted)' }}>
-          © {new Date().getFullYear()} Made with ❤️ by SAndhya. All rights reserved.
+          © {new Date().getFullYear()} Made with ❤️ by Sandhya
         </p>
       </footer>
     </>
