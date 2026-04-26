@@ -192,7 +192,7 @@ export function Landing() {
             <br />
             +977 9800000000
             <br />
-            hello@yumyum.local
+            yumyum@gmail.com
           </div>
           <div>
             <strong>Helpful links</strong>
@@ -212,7 +212,7 @@ export function Landing() {
           </div>
         </div>
         <p style={{ textAlign: 'center', marginTop: 24, fontSize: '0.8rem', color: 'var(--yy-muted)' }}>
-          © {new Date().getFullYear()} YumYum · Privacy · Terms
+          © {new Date().getFullYear()} Made with ❤️ by SAndhya. All rights reserved.
         </p>
       </footer>
     </>
